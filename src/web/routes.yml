@@ -1,7 +1,0 @@
-getCompanies:
-    handler: src/web/get-companies.endpoint
-    events:
-      - http:
-          path: get-companies
-          method: get
-          cors: true

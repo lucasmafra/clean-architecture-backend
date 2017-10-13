@@ -1,0 +1,7 @@
+graphql:
+    handler: src/presentation/graphql-endpoint.endpoint
+    events:
+      - http:
+          path: graphql
+          method: post
+          cors: true

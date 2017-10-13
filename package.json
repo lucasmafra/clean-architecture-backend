@@ -5,11 +5,13 @@
   "dependencies": {
     "aws-lambda": "^0.1.2",
     "di-typescript": "^1.1.4",
+    "graphql": "^0.11.7",
     "lodash": "^4.17.4",
     "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.17",
+    "@types/graphql": "^0.11.5",
     "@types/lodash": "^4.14.77",
     "@types/uuid": "^3.4.2",
     "reflect-metadata": "^0.1.10",
