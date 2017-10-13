@@ -9,11 +9,11 @@ export async function endpoint(event: APIGatewayEvent, context: Context, callbac
         const request = requestParser(event)
         const result = await graphql(MyTopShopSchema, request.body.query, null, null, request.body.variables)
         if (result.errors) {
-            callback(undefined, responseBuilder(500, result))
+            callback(undefined, responseBuilder(500, result.data, result.errors))
         } else {
-            callback(undefined, responseBuilder(200, result))
+            callback(undefined, responseBuilder(200, result.data, result.errors))
         }
     } catch (err) {
-        callback(undefined, responseBuilder(500, err.message))
+        callback(undefined, responseBuilder(500, undefined, err.message))
     }
 }
