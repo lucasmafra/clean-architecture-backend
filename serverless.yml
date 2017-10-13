@@ -1,0 +1,12 @@
+service: clean-architecture-case-study
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+
+functions: ${file(src/web/routes.yml)}
+
+plugins:
+  - serverless-webpack
+  - serverless-dynamodb-local
+  - serverless-offline
