@@ -1,44 +1,31 @@
-import { AuthorizerServiceGateway, CategoryRepositoryGateway, SubcategoryRepositoryGateway } from 'core/gateways'
+import { ISubcategoryRepository } from 'core/repositories'
+import { AuthorizerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminCreateSubcategoryUseCase extends BaseAdminUseCase<IUseCaseDependencies, IUseCaseInput, IUseCaseOutput> {
+export class AdminCreateSubcategory extends BaseAdminUseCase<IAdminCreateSubcategoryInput, IAdminCreateSubcategoryOutput> {
 
-  constructor(
-    protected dependencies: IUseCaseDependencies,
-  ) {
-    super(dependencies.authorizerService)
-  }
-
-  public async buildUseCase(input: IUseCaseInput): Promise<IUseCaseOutput> {
-    await this.validate(input.categoryId)
-    return this.dependencies.subcategoryRepository.createSubcategory(input)
-  }
-
-  private async validate(categoryId: string) {
-    const category = await this.dependencies.categoryRepository.getCategoryById(categoryId)
-    if (!category) {
-      throw new Error('Invalid category id')
+    constructor(
+        protected authorizerService: AuthorizerService,
+        protected subcategoryRepository: ISubcategoryRepository,
+    ) {
+        super(authorizerService)
     }
-  }
+
+    public async buildUseCase(input: IAdminCreateSubcategoryInput): Promise<IAdminCreateSubcategoryOutput> {
+        return this.subcategoryRepository.createSubcategory(input)
+    }
+
 }
 
-interface IUseCaseDependencies {
-  authorizerService: AuthorizerServiceGateway.BaseAuthorizerService,
-  subcategoryRepository: SubcategoryRepositoryGateway.ISubcategoryRepository,
-  categoryRepository: CategoryRepositoryGateway.ICategoryRepository,
+interface IAdminCreateSubcategoryInput {
+    name: string
+    image: string,
+    categoryId: string,
 }
 
-interface IUseCaseInput {
-  name: string
-  description: string
-  image: string,
-  categoryId: string,
-}
-
-interface IUseCaseOutput {
-  id: string
-  name: string
-  description: string
-  image: string
-  categoryId: string
+interface IAdminCreateSubcategoryOutput {
+    id: string
+    name: string
+    image: string
+    categoryId: string
 }

@@ -1,17 +1,17 @@
-import { AuthorizerServiceGateway } from '../../gateways'
+import { AuthorizerService, IMyTopShopCredential, MyTopShopRole } from 'core/services'
 import { BaseUseCase } from '../base-use-case'
 
-export abstract class BaseCustomerUseCase<IUseCaseDependencies, IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseDependencies, IUseCaseInput, IUseCaseOutput> {
+export abstract class BaseCustomerUseCase<IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
-    private credential: AuthorizerServiceGateway.IMyTopShopCredential
+    private credential: IMyTopShopCredential
 
-    constructor(private authorizerGateway: AuthorizerServiceGateway.BaseAuthorizerService) {
+    constructor(private authorizer: AuthorizerService) {
         super()
     }
 
     public async execute(input: IUseCaseInput): Promise<IUseCaseOutput> {
         try {
-            this.credential = await this.authorizerGateway.authorizeByAllowedRoles([AuthorizerServiceGateway.MyTopShopRole.Customer])
+            this.credential = await this.authorizer.authorizeByAllowedRoles([MyTopShopRole.Customer])
             const result = await this.buildUseCase(input)
             return result
         } catch (err) {

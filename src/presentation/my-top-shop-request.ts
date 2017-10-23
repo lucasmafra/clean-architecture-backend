@@ -25,7 +25,7 @@ export class MyTopShopRequest {
     }
 }
 
-export function requestParser(event: APIGatewayEvent) {
+export function parseRequest(event: APIGatewayEvent): MyTopShopRequest {
     const body = JSON.parse(event.body as string)
     return new MyTopShopRequest(
         body.query,

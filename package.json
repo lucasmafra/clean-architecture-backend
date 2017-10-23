@@ -5,7 +5,9 @@
   "dependencies": {
     "aws-lambda": "^0.1.2",
     "di-typescript": "^1.1.4",
-    "graphql": "^0.11.7",
+    "graphql": "0.10.3",
+    "graphql-decorator": "^0.2.0",
+    "graphql-ts": "https://github.com/lucasmafra/graphql-ts/tarball/dev",
     "lodash": "^4.17.4",
     "uuid": "^3.1.0"
   },

@@ -1,24 +1,28 @@
-import { AuthenticatorServiceGateway, AuthorizerServiceGateway, MailerServiceGateway, PendingCompanyRepositoryGateway } from '../../gateways'
+import { ICompanyRepository } from 'core/repositories'
+import { AuthorizerService, IAuthenticatorService, IMailerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminApproveCompanyOwnerUseCase extends BaseAdminUseCase<IUseCaseDependencies, IUseCaseInput, void> {
+export class AdminApprovePendingCompany extends BaseAdminUseCase<IAdminApprovePendingCompanyInput, void> {
 
     private EMAIL_FROM = 'no-reply@mytopshop.com'
     private EMAIL_SUBJECT = 'Seu cadastro foi aprovado'
     private EMAIL_BODY = 'Bem vindo a nossa plataforma'
 
     constructor(
-        protected dependencies: IUseCaseDependencies,
+        protected authorizerService: AuthorizerService,
+        protected authenticatorService: IAuthenticatorService,
+        protected mailerService: IMailerService,
+        protected companyRepository: ICompanyRepository,
     ) {
-        super(dependencies.authorizerService)
+        super(authorizerService)
     }
 
-  public async buildUseCase(input: IUseCaseInput): Promise<void> {
-    const pendingCompany = await this.validate(input.companyId)
-    await this.dependencies.pendingCompanyRepository.approvePendingCompany(input.companyId)
-    await this.dependencies.authenticatorService.confirmCompanyOwner(pendingCompany.companyOwnerEmail)
+  public async buildUseCase(input: IAdminApprovePendingCompanyInput): Promise<void> {
+    const pendingCompany = await this.companyRepository.getPendingCompanyById(input.companyId)
+    await this.companyRepository.approvePendingCompany(input.companyId)
+    await this.authenticatorService.confirmCompanyOwner(pendingCompany.companyOwnerEmail)
 
-    return this.dependencies.mailerService.sendEmail(
+    return this.mailerService.sendEmail(
         this.EMAIL_FROM,
         [pendingCompany.companyOwnerEmail],
         this.EMAIL_SUBJECT,
@@ -26,22 +30,8 @@ export class AdminApproveCompanyOwnerUseCase extends BaseAdminUseCase<IUseCaseDe
     )
   }
 
-  private async validate(companyId: string): Promise<PendingCompanyRepositoryGateway.IPendingCompanyOutput> {
-    const pendingCompany = await this.dependencies.pendingCompanyRepository.getPendingCompanyById(companyId)
-    if (!pendingCompany) {
-      throw new Error('No pending company with this id')
-    }
-    return Promise.resolve(pendingCompany)
-  }
 }
 
-interface IUseCaseDependencies {
-    authorizerService: AuthorizerServiceGateway.BaseAuthorizerService,
-    authenticatorService: AuthenticatorServiceGateway.IAuthenticatorService,
-    mailerService: MailerServiceGateway.IMailerService,
-    pendingCompanyRepository: PendingCompanyRepositoryGateway.IPendingCompanyRepository,
-}
-
-interface IUseCaseInput {
+export interface IAdminApprovePendingCompanyInput {
     companyId: string
 }

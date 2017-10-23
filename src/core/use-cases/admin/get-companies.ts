@@ -1,25 +1,22 @@
-import { AuthorizerServiceGateway, CompanyRepositoryGateway } from 'core/gateways'
+import { ICompanyRepository} from 'core/repositories'
+import { AuthorizerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminGetCompaniesUseCase extends BaseAdminUseCase<IUseCaseDependencies, null, IUseCaseOutput[]> {
+export class AdminGetCompanies extends BaseAdminUseCase<null, IAdminGetCompaniesOutput[]> {
 
   constructor(
-    protected dependencies: IUseCaseDependencies,
+    protected authorizerService: AuthorizerService,
+    protected companyRepository: ICompanyRepository,
   ) {
-    super(dependencies.authorizerService)
+    super(authorizerService)
   }
 
-  public async buildUseCase(): Promise<IUseCaseOutput[]> {
-    return this.dependencies.companyRepository.getAllCompanies()
+  public async buildUseCase(): Promise<IAdminGetCompaniesOutput[]> {
+    return this.companyRepository.getAllCompanies()
   }
 }
 
-interface IUseCaseDependencies {
-  authorizerService: AuthorizerServiceGateway.BaseAuthorizerService,
-  companyRepository: CompanyRepositoryGateway.ICompanyRepository,
-}
-
-interface IUseCaseOutput {
+interface IAdminGetCompaniesOutput {
   id: string
   tradeName: string
   companyName: string

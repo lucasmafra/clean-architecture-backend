@@ -2,7 +2,7 @@ import { IStoreRepository } from 'core/repositories'
 import { AuthorizerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminGetStores extends BaseAdminUseCase<null, IAdminGetStoresOutput[]> {
+export class AdminGetStoreDetail extends BaseAdminUseCase<IAdminGetStoreDetail, IAdminGetStoreDetailOutput> {
 
   constructor(
     protected authorizerService: AuthorizerService,
@@ -11,12 +11,20 @@ export class AdminGetStores extends BaseAdminUseCase<null, IAdminGetStoresOutput
     super(authorizerService)
   }
 
-  public async buildUseCase(): Promise<IAdminGetStoresOutput[]> {
-    return this.storeRepository.getAllStores()
+  public async buildUseCase(input: IAdminGetStoreDetail): Promise<IAdminGetStoreDetailOutput> {
+    const store = await this.storeRepository.getStoreById(input.id)
+    if (!store) {
+      throw new Error('No Store found')
+    }
+    return store
   }
 }
 
-interface IAdminGetStoresOutput {
+interface IAdminGetStoreDetail {
+  id: string
+}
+
+interface IAdminGetStoreDetailOutput {
   id: string
   name: string
   cnpj: string

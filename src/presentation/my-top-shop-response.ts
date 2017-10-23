@@ -22,7 +22,13 @@ export class MyTopShopResponse {
       }
 }
 
-export function responseBuilder(statusCode: number, data?: { [key: string]: any }, errors?: Error[], isBase64Encoded?: boolean): JSON {
+export function buildResponse(
+    statusCode: number,
+    data?: { [key: string]: any },
+    errors?: Error[],
+    isBase64Encoded?: boolean,
+): MyTopShopResponse {
+
     const response = new MyTopShopResponse(statusCode, data, errors, isBase64Encoded)
     return JSON.parse(JSON.stringify(response))
 }

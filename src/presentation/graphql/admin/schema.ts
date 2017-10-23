@@ -1,132 +1,17 @@
-import { Injector } from 'di-typescript'
-import { GraphQLID, GraphQLNonNull, GraphQLObjectType } from 'graphql/type'
-import * as AdminFactories from 'presentation/factories/admin'
-import { CompanyOwnerView } from './types'
+import { Arg, Field, List, ObjectType } from 'graphql-decorator'
+import { adminGetCompanyOwnerDetail, CompanyOwnerDetailForAdmin } from './get-company-owner-detail'
+import { adminGetCompanyOwners, CompanyOwnerForAdmin } from './get-company-owners'
 
-const Queries = new GraphQLObjectType({
-  name: 'AdminQueries',
-  fields: {
-    companyOwner: {
-      type: CompanyOwnerView,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-      resolve: async (parent, {id}, context) => {
-        const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-        return useCase.execute(null)
-      },
-    },
-    companyOwners: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    company: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    companies: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    pendingCompanies: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-  },
-})
+@ObjectType()
+export class AdminQueries  {
 
-const Mutations = new GraphQLObjectType({
-  name: 'AdminMutations',
-  fields: {
-    createCategories: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    createSubcategory: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    updateCategory: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    updateSubcategory: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    deleteCategory: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    deleteSubcategory: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-    approveCompanyOwner: {
-        type: CompanyOwnerView,
-        args: { id: { type: new GraphQLNonNull(GraphQLID) } },
-        resolve: async (parent, {id}, context) => {
-          const useCase = new Injector().get(AdminFactories.AdminGetCompaniesUseCaseFactory).build()
-          return useCase.execute(null)
-        },
-    },
-  },
-})
+    @List() @Field({ type: CompanyOwnerForAdmin })
+    public companyOwners() {
+        return adminGetCompanyOwners()
+    }
 
-export const AdminQueries = new GraphQLObjectType({
-  name: 'AdminQueries',
-  fields: {
-    AdminQueries: {
-      type: Queries,
-      resolve: () => true, // workaround for schema group in graphql
-    },
-  },
-})
-
-export const AdminMutations = new GraphQLObjectType({
-  name: 'AdminMutations',
-  fields: {
-    AdminMutations: {
-      type: Mutations,
-      resolve: () => true, // workaround for schema group in graphql
-    },
-  },
-})
+    @Field({ type: CompanyOwnerDetailForAdmin })
+    public companyOwner( @Arg({ name: 'id' }) id: string ) {
+        return adminGetCompanyOwnerDetail(id)
+    }
+}

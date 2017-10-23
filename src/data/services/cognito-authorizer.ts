@@ -1,10 +1,10 @@
-import { AuthorizerServiceGateway } from 'core'
+import { AuthorizerService, IMyTopShopCredential, MyTopShopRole } from 'core'
 
-export class CognitoAuthorizer extends AuthorizerServiceGateway.BaseAuthorizerService  {
+export class CognitoAuthorizer extends AuthorizerService  {
 
-  public async getCredential(): Promise<AuthorizerServiceGateway.IMyTopShopCredential> {
+  public async getCredential(): Promise<IMyTopShopCredential> {
       return Promise.resolve({
-        role: AuthorizerServiceGateway.MyTopShopRole.Admin,
+        role: MyTopShopRole.Admin,
         userId: '1',
       })
   }

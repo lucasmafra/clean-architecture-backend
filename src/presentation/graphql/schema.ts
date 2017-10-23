@@ -1,33 +1,20 @@
-import { GraphQLObjectType } from 'graphql'
-import { GraphQLSchema } from 'graphql/type'
-import { merge } from 'lodash'
-import { AdminMutations, AdminQueries } from './admin'
+import { Field, ObjectType, Query, Schema } from 'graphql-decorator'
+import { AdminQueries } from './admin'
+import { CustomerQueries } from './customer'
 
-const Query = merge(
-  AdminQueries,
-//   CompanyOwnerQueries,
-//   CustomerQueries,
-//   PublicQueries,
-//   StoreManagerQueries,
-) as GraphQLObjectType
+@ObjectType()
+export class RootQuery {
 
-const Mutation = merge(
-  AdminMutations,
-//   CompanyOwnerMutations,
-//   CustomerMutations,
-//   StoreManagerMutations,
-//   PublicMutations,
-) as GraphQLObjectType
+    @Field({ type: AdminQueries}) public adminQueries() {
+        return true
+    }
+    @Field( { type: CustomerQueries}) public customerQueries() {
+        return true
+    }
+}
 
-Query.name = 'RootQuery'
-Query.description = 'All MyTopShop queries'
-
-Mutation.name = 'RootMutation'
-Mutation.description = 'All MyTopShop mutations'
-
-const MyTopShopSchema = new GraphQLSchema({
-  query: Query,
-  mutation: Mutation,
-})
-
-export { MyTopShopSchema }
+@Schema()
+export class MyTopShopSchema {
+  @Query() public query: RootQuery
+//   @Mutation() public mutation: Mutations
+}

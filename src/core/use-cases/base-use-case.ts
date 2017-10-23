@@ -1,7 +1,4 @@
-export abstract class BaseUseCase<IUseCaseDependencies, IUseCaseInput, IUseCaseOutput> {
-
-    public constructor(protected dependencies?: IUseCaseDependencies) {
-    }
+export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
     public abstract buildUseCase(input: IUseCaseInput): Promise<IUseCaseOutput>
 

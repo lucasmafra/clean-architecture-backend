@@ -1,6 +1,6 @@
-import { CompanyOwnerRepositoryGateway } from 'core'
+import { ICompanyOwnerOutput, ICompanyOwnerRepository, ICreateCompanyOwnerInput, IUpdateCompanyOwnerInput } from 'core'
 
-export class DynamoCompanyOwner implements CompanyOwnerRepositoryGateway.ICompanyOwnerRepository {
+export class DynamoCompanyOwner implements ICompanyOwnerRepository {
 
     private mockCompanyOwner = {
         id: '1',
@@ -10,27 +10,27 @@ export class DynamoCompanyOwner implements CompanyOwnerRepositoryGateway.ICompan
         companyId: '123', // nome fantasia
     }
 
-    public async getCompanyOwnersByIds(ids: string[]): Promise<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput[]> {
-        return new Array<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput>(this.mockCompanyOwner)
+    public async getCompanyOwnersByIds(ids: string[]): Promise<ICompanyOwnerOutput[]> {
+        return new Array<ICompanyOwnerOutput>(this.mockCompanyOwner)
     }
 
-    public async getAllCompanyOwners(): Promise<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput[]> {
-        return new Array<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput>(this.mockCompanyOwner)
+    public async getAllCompanyOwners(): Promise<ICompanyOwnerOutput[]> {
+        return new Array<ICompanyOwnerOutput>(this.mockCompanyOwner)
     }
 
-    public async getCompanyOwnerById(id: string): Promise<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput | undefined> {
+    public async getCompanyOwnerById(id: string): Promise<ICompanyOwnerOutput> {
         return this.mockCompanyOwner
     }
 
-    public async createCompanyOwner(companyOwner: CompanyOwnerRepositoryGateway.ICreateCompanyOwnerInput): Promise<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput> {
+    public async createCompanyOwner(companyOwner: ICreateCompanyOwnerInput): Promise<ICompanyOwnerOutput> {
         return this.mockCompanyOwner
     }
 
-    public async updateCompanyOwner(id: string, companyOwner: CompanyOwnerRepositoryGateway.IUpdateCompanyOwnerInput): Promise<CompanyOwnerRepositoryGateway.ICompanyOwnerOutput> {
+    public async updateCompanyOwner(id: string, companyOwner: IUpdateCompanyOwnerInput): Promise<ICompanyOwnerOutput> {
         return this.mockCompanyOwner
     }
 
     public async deleteCompanyOwner(id: string): Promise<void> {
-        return Promise.resolve()
+        return
     }
 }

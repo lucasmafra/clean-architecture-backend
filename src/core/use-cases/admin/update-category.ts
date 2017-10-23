@@ -1,36 +1,31 @@
-import { AuthorizerServiceGateway, CategoryRepositoryGateway } from 'core/gateways'
+import { ICategoryRepository } from 'core/repositories'
+import { AuthorizerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminUpdateCategoryUseCase extends BaseAdminUseCase<IUseCaseDependencies, IUseCaseInput, IUseCaseOutput> {
+export class AdminUpdateCategory extends BaseAdminUseCase<IAdminUpdateCategoryInput, IAdminUpdateCategoryOutput> {
 
   constructor(
-    protected dependencies: IUseCaseDependencies,
+    protected authorizerService: AuthorizerService,
+    protected categoryRepository: ICategoryRepository,
   ) {
-    super(dependencies.authorizerService)
+    super(authorizerService)
   }
 
-  public async buildUseCase(input: IUseCaseInput): Promise<IUseCaseOutput> {
-    return this.dependencies.categoryRepository.updateCategory(input.id, input.category)
+  public async buildUseCase(input: IAdminUpdateCategoryInput): Promise<IAdminUpdateCategoryOutput> {
+    return this.categoryRepository.updateCategory(input.id, input.category)
   }
 }
 
-interface IUseCaseDependencies {
-  authorizerService: AuthorizerServiceGateway.BaseAuthorizerService,
-  categoryRepository: CategoryRepositoryGateway.ICategoryRepository,
-}
-
-interface IUseCaseInput {
+interface IAdminUpdateCategoryInput {
   id: string,
   category: {
     name?: string
-    description?: string
     image?: string,
   }
 }
 
-interface IUseCaseOutput {
+interface IAdminUpdateCategoryOutput {
   id: string
   name: string
-  description: string
   image: string
 }

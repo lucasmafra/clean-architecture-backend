@@ -1,25 +1,22 @@
-import { AuthorizerServiceGateway, PendingCompanyRepositoryGateway } from 'core/gateways'
+import { ICompanyRepository } from 'core/repositories'
+import { AuthorizerService } from 'core/services'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
-export class AdminGetPendingCompaniesUseCase extends BaseAdminUseCase<IUseCaseDependencies, null, IUseCaseOutput[]> {
+export class AdminGetPendingCompanies extends BaseAdminUseCase<null, IAdminGetPendingCompaniesOutput[]> {
 
   constructor(
-    protected dependencies: IUseCaseDependencies,
+    protected authorizerService: AuthorizerService,
+    protected companyRepository: ICompanyRepository,
   ) {
-    super(dependencies.authorizerService)
+    super(authorizerService)
   }
 
-  public async buildUseCase(): Promise<IUseCaseOutput[]> {
-    return this.dependencies.pendingCompanyRepository.getAllPendingCompanies()
+  public async buildUseCase(): Promise<IAdminGetPendingCompaniesOutput[]> {
+    return this.companyRepository.getAllPendingCompanies()
   }
 }
 
-interface IUseCaseDependencies {
-  authorizerService: AuthorizerServiceGateway.BaseAuthorizerService,
-  pendingCompanyRepository: PendingCompanyRepositoryGateway.IPendingCompanyRepository,
-}
-
-interface IUseCaseOutput {
+interface IAdminGetPendingCompaniesOutput {
   id: string
   companyOwnerName: string
   companyOwnerCpf: string
