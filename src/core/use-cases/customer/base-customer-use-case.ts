@@ -3,7 +3,7 @@ import { BaseUseCase } from '../base-use-case'
 
 export abstract class BaseCustomerUseCase<IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
-    private credential: IMyTopShopCredential
+    public credential: IMyTopShopCredential
 
     constructor(private authorizer: AuthorizerService) {
         super()

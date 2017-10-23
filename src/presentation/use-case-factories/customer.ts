@@ -12,3 +12,12 @@ export class CustomerGetCategories implements IUseCaseFactory<CustomerUseCases.C
     ) {}
     public build() { return new CustomerUseCases.CustomerGetCategories(this.authorizerService, this.categoryRepository) }
 }
+
+@Inject
+export class CustomerUpdateProfile implements IUseCaseFactory<CustomerUseCases.CustomerUpdateProfile> {
+    constructor(
+        public authorizerService: CognitoAuthorizer,
+        public customerRepository: Database.DynamoCustomer,
+    ) {}
+    public build() { return new CustomerUseCases.CustomerUpdateProfile(this.authorizerService, this.customerRepository) }
+}

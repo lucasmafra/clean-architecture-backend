@@ -2,14 +2,16 @@ export interface ICustomerRepository {
     getCustomersByIds(ids: string[]): Promise<ICustomerOutput[]>
     getAllCustomers(): Promise<ICustomerOutput[]>
     getCustomerById(id: string): Promise<ICustomerOutput>
-    createCustomer(Customer: ICreateCustomerInput): Promise<ICustomerOutput>
-    updateCustomer(id: string, Customer: IUpdateCustomerInput): Promise<ICustomerOutput>
+    createCustomer(customer: ICreateCustomerInput): Promise<ICustomerOutput>
+    updateCustomer(id: string, customer: IUpdateCustomerInput): Promise<ICustomerOutput>
     deleteCustomer(id: string): Promise<void>
     getCustomerByEmail(email: string): Promise<ICustomerOutput>
 }
 
-export interface ICustomerAccountProvider {
-    value: string
+export enum CustomerAccountProvider {
+    Facebook = 'facebook',
+    Google = 'google',
+    Cognito = 'cognito',
 }
 
 export interface ICustomerOutput {
@@ -19,7 +21,7 @@ export interface ICustomerOutput {
     city: string
     state: string
     country: string
-    accountProviders: ICustomerAccountProvider[]
+    accountProviders: CustomerAccountProvider[]
     gender?: string
     dateOfBirth?: Date
     profilePicture?: string
@@ -32,7 +34,7 @@ export interface ICreateCustomerInput {
     city: string
     state: string
     country: string
-    accountProvider: ICustomerAccountProvider
+    accountProvider: CustomerAccountProvider
     gender?: string
     dateOfBirth?: Date
     profilePicture?: string
@@ -45,6 +47,6 @@ export interface IUpdateCustomerInput {
     city?: string
     gender?: string
     dateOfBirth?: Date
-    accountProviders?: ICustomerAccountProvider[]
+    accountProviders?: CustomerAccountProvider[]
     profilePicture?: string
 }

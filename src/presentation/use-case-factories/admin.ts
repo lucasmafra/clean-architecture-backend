@@ -30,3 +30,12 @@ export class AdminGetCompanyOwners implements IUseCaseFactory<AdminUseCases.Admi
     ) {}
     public build() { return new AdminUseCases.AdminGetCompanyOwners(this.authorizerService, this.companyOwnerRepository) }
 }
+
+@Inject
+export class AdminCreateCategory implements IUseCaseFactory<AdminUseCases.AdminCreateCategory> {
+    constructor(
+        protected authorizerService: CognitoAuthorizer,
+        protected categoryRepository: Database.DynamoCategory,
+    ) {}
+    public build() { return new AdminUseCases.AdminCreateCategory(this.authorizerService, this.categoryRepository) }
+}

@@ -17,6 +17,7 @@ export class CompanyOwnerDetailForAdmin implements IAdminGetCompanyOwnerDetailOu
 
     @Field()
     public email: string
+
 }
 
 export function adminGetCompanyOwnerDetail(id: string): Promise<CompanyOwnerDetailForAdmin>  {

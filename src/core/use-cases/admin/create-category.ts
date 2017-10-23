@@ -21,7 +21,7 @@ export interface IAdminCreateCategoryInput {
     image: string,
 }
 
-interface IAdminCreateCategoryOutput {
+export interface IAdminCreateCategoryOutput {
     id: string
     name: string
     image: string
