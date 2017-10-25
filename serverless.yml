@@ -4,7 +4,7 @@ provider:
   name: aws
   runtime: nodejs6.10
 
-functions: ${file(src/presentation/routes.yml)}
+functions: ${file(src/presentation/api/admin/routes.yml)}
 
 plugins:
   - serverless-webpack

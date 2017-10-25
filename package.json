@@ -4,6 +4,7 @@
   "description": "",
   "dependencies": {
     "aws-lambda": "^0.1.2",
+    "class-validator": "^0.7.3",
     "di-typescript": "^1.1.4",
     "graphql": "0.10.3",
     "graphql-decorator": "^0.2.0",

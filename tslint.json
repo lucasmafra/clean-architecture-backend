@@ -12,7 +12,8 @@
         "no-unused-variable": true,
         "max-line-length": [true, 200],
         "no-namespace": false,
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "forin": false
     },
     "rulesDirectory": []
 }

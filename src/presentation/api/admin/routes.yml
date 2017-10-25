@@ -1,0 +1,27 @@
+createCategory:
+    handler: src/presentation/api/admin/create-category.endpoint
+    events:
+      - http:
+          path: admin/category
+          method: post
+          cors: true
+
+getCompanies:
+    handler: src/presentation/api/admin/get-companies.endpoint
+    events:
+      - http:
+          path: admin/companies
+          method: get
+          cors: true
+
+getCompanyOwnerDetail:
+    handler: src/presentation/api/admin/get-company-owner-detail.endpoint
+    events:
+      - http:
+          path: admin/companyOwner/{id}
+          method: get
+          cors: true
+          request: 
+            parameters: 
+                paths: 
+                  id: true

@@ -1,4 +1,5 @@
 import { APIGatewayEvent  } from 'aws-lambda'
+import { validate, ValidationError } from 'class-validator'
 
 export interface IMyTopShopRequestHeaders {
     identityProvider: string
@@ -6,31 +7,38 @@ export interface IMyTopShopRequestHeaders {
 }
 
 export interface IMyTopShopRequestBody {
-    query: string
-    variables: { [key: string]: any }
+    [key: string]: any
 }
 
 export class MyTopShopRequest {
     public body: IMyTopShopRequestBody
     public headers: IMyTopShopRequestHeaders
-    constructor(query: string, variables: { [key: string]: any }, identityProvider: string, token: string) {
-        this.body = {
-            query,
-            variables,
-        }
+    constructor(data: JSON, identityProvider: string, token: string) {
+        this.body = data
         this.headers = {
             identityProvider,
             token,
         }
+    }
+    public validateBody(inputModel: any): Promise<ValidationError[] | undefined> {
+        for (const key in inputModel) {
+            inputModel[key] = this.body[key]
+        }
+        return validate(inputModel)
     }
 }
 
 export function parseRequest(event: APIGatewayEvent): MyTopShopRequest {
     const body = JSON.parse(event.body as string)
     return new MyTopShopRequest(
-        body.query,
-        body.variables,
+        body,
         event.headers['Identity-Provider'] || event.headers['identity-provider'] ,
         event.headers.Token || event.headers.token,
     )
+}
+
+export function Serializable(): any {
+    return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+        target[propertyKey] = undefined
+    }
 }
