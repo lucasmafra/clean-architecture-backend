@@ -1,11 +1,10 @@
-import { AuthorizerService, IMyTopShopCredential, MyTopShopRole } from 'core/services'
-import { BaseUseCase } from '../base-use-case'
+import { AuthorizerDataSource, BaseUseCase, IMyTopShopCredential, MyTopShopRole } from 'core'
 
 export abstract class BaseAdminUseCase<IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
     public credential: IMyTopShopCredential
 
-    constructor(private authorizerGateway: AuthorizerService) {
+    constructor(private authorizerGateway: AuthorizerDataSource) {
         super()
     }
 

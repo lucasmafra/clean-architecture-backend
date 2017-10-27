@@ -1,18 +1,18 @@
 import { APIGatewayEvent  } from 'aws-lambda'
-import { validate, ValidationError } from 'class-validator'
+import { validate } from 'class-validator'
 
-export interface IMyTopShopRequestHeaders {
+export interface IRequestHeaders {
     identityProvider: string
     token: string
 }
 
-export interface IMyTopShopRequestBody {
+export interface IRequestBody {
     [key: string]: any
 }
 
-export class MyTopShopRequest {
-    public body: IMyTopShopRequestBody
-    public headers: IMyTopShopRequestHeaders
+export class Request {
+    public body: IRequestBody
+    public headers: IRequestHeaders
     constructor(data: JSON, identityProvider: string, token: string) {
         this.body = data
         this.headers = {
@@ -20,17 +20,18 @@ export class MyTopShopRequest {
             token,
         }
     }
-    public validateBody(inputModel: any): Promise<ValidationError[] | undefined> {
+    public async validateBody(inputModel: any): Promise<Array<{[type: string]: string}>> {
         for (const key in inputModel) {
             inputModel[key] = this.body[key]
         }
-        return validate(inputModel)
+        const validationErrors = await validate(inputModel)
+        return validationErrors.map( (validationError) => validationError.constraints)
     }
 }
 
-export function parseRequest(event: APIGatewayEvent): MyTopShopRequest {
+export function parseRequest(event: APIGatewayEvent): Request {
     const body = JSON.parse(event.body as string)
-    return new MyTopShopRequest(
+    return new Request(
         body,
         event.headers['Identity-Provider'] || event.headers['identity-provider'] ,
         event.headers.Token || event.headers.token,

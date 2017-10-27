@@ -1,18 +1,28 @@
-import { ICategoryRepository } from 'core/repositories'
-import { AuthorizerService } from 'core/services'
+import { ICategoryDataSource, ISubcategoryDataSource } from 'core'
+import { AuthorizerDataSource } from 'core'
 import { BaseCustomerUseCase } from './base-customer-use-case'
 
 export class CustomerGetCategories extends BaseCustomerUseCase<null, ICustomerGetCategoriesOutput[]> {
 
   constructor(
-    protected authorizerService: AuthorizerService,
-    protected categoryRepository: ICategoryRepository,
+    protected authorizerDataSource: AuthorizerDataSource,
+    protected categoryDataSource: ICategoryDataSource,
+    protected subcategoryDataSource: ISubcategoryDataSource,
   ) {
-    super(authorizerService)
+    super(authorizerDataSource)
   }
 
   public async buildUseCase(): Promise<ICustomerGetCategoriesOutput[]> {
-    return this.categoryRepository.getAllCategories()
+    const result = new Array<ICustomerGetCategoriesOutput>()
+    const categories = await this.categoryDataSource.getAllCategories()
+    for (const category of categories) {
+      const subcategories = await this.subcategoryDataSource.getSubcategoriesByCategoryId(category.id)
+      result.push({
+        subcategories,
+        ...category,
+      })
+    }
+    return result
   }
 }
 

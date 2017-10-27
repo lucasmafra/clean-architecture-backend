@@ -1,5 +1,5 @@
-import { ICompanyRepository } from 'core/repositories'
-import { AuthorizerService, IAuthenticatorService, IMailerService } from 'core/services'
+import { AuthorizerDataSource, IAuthenticatorDataSource, ICompanyDataSource, IMailerDataSource } from 'core'
+import {  } from 'core'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminApprovePendingCompany extends BaseAdminUseCase<IAdminApprovePendingCompanyInput, void> {
@@ -9,20 +9,20 @@ export class AdminApprovePendingCompany extends BaseAdminUseCase<IAdminApprovePe
     private EMAIL_BODY = 'Bem vindo a nossa plataforma'
 
     constructor(
-        protected authorizerService: AuthorizerService,
-        protected authenticatorService: IAuthenticatorService,
-        protected mailerService: IMailerService,
-        protected companyRepository: ICompanyRepository,
+        protected authorizerDataSource: AuthorizerDataSource,
+        protected authenticatorDataSource: IAuthenticatorDataSource,
+        protected mailerDataSource: IMailerDataSource,
+        protected companyDataSource: ICompanyDataSource,
     ) {
-        super(authorizerService)
+        super(authorizerDataSource)
     }
 
   public async buildUseCase(input: IAdminApprovePendingCompanyInput): Promise<void> {
-    const pendingCompany = await this.companyRepository.getPendingCompanyById(input.companyId)
-    await this.companyRepository.approvePendingCompany(input.companyId)
-    await this.authenticatorService.confirmCompanyOwner(pendingCompany.companyOwnerEmail)
+    const pendingCompany = await this.companyDataSource.getPendingCompanyById(input.companyId)
+    await this.companyDataSource.approvePendingCompany(input.companyId)
+    await this.authenticatorDataSource.confirmCompanyOwner(pendingCompany.companyOwnerEmail)
 
-    return this.mailerService.sendEmail(
+    return this.mailerDataSource.sendEmail(
         this.EMAIL_FROM,
         [pendingCompany.companyOwnerEmail],
         this.EMAIL_SUBJECT,
@@ -32,6 +32,6 @@ export class AdminApprovePendingCompany extends BaseAdminUseCase<IAdminApprovePe
 
 }
 
-export interface IAdminApprovePendingCompanyInput {
-    companyId: string
+export class IAdminApprovePendingCompanyInput {
+    public companyId: string
 }

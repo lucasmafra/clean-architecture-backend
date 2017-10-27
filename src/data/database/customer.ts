@@ -1,6 +1,6 @@
-import { CustomerAccountProvider, ICreateCustomerInput, ICustomerOutput, ICustomerRepository, IUpdateCustomerInput } from 'core'
+import { CustomerAccountProvider, ICreateCustomerInput, ICustomerDataSource, ICustomerOutput, IUpdateCustomerInput } from 'core'
 
-export class DynamoCustomer implements ICustomerRepository {
+export class CustomerDatabase implements ICustomerDataSource {
 
     private mockCustomer: ICustomerOutput = {
         id: 'jfkajdla',

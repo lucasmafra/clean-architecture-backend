@@ -1,18 +1,17 @@
-import { ICategoryRepository } from 'core/repositories'
-import { AuthorizerService } from 'core/services'
+import { AuthorizerDataSource, ICategoryDataSource } from 'core'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminUpdateCategory extends BaseAdminUseCase<IAdminUpdateCategoryInput, IAdminUpdateCategoryOutput> {
 
   constructor(
-    protected authorizerService: AuthorizerService,
-    protected categoryRepository: ICategoryRepository,
+    protected authorizerDataSource: AuthorizerDataSource,
+    protected categoryDataSource: ICategoryDataSource,
   ) {
-    super(authorizerService)
+    super(authorizerDataSource)
   }
 
   public async buildUseCase(input: IAdminUpdateCategoryInput): Promise<IAdminUpdateCategoryOutput> {
-    return this.categoryRepository.updateCategory(input.id, input.category)
+    return this.categoryDataSource.updateCategory(input.id, input.category)
   }
 }
 

@@ -1,3 +1,5 @@
+import { ErrorType, MyTopShopError } from 'core'
+
 export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
     public abstract buildUseCase(input: IUseCaseInput): Promise<IUseCaseOutput>
@@ -8,7 +10,10 @@ export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
             return result
         } catch (err) {
             console.log(err.stack)
-            throw(err)
+            if (err instanceof MyTopShopError) {
+                throw err
+            }
+            throw new MyTopShopError(ErrorType.GenericError)
         }
     }
 }

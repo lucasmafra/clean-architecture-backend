@@ -1,13 +1,13 @@
 import {
+    ICompanyDataSource,
     ICompanyOutput,
-    ICompanyRepository,
     ICreateCompanyInput,
     ICreatePendingCompanyInput,
     IPendingCompanyOutput,
     IUpdateCompanyInput,
  } from 'core'
 
-export class DynamoCompany implements ICompanyRepository {
+export class CompanyDatabase implements ICompanyDataSource {
 
     private mockCompany = {
         id: '123',

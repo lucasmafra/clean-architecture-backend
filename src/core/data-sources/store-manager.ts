@@ -1,11 +1,11 @@
-export interface IStoreManagerRepository {
+export interface IStoreManagerDataSource {
     getStoreManagersByIds(ids: string[]): Promise<IStoreManagerOutput[]>
     getAllStoreManagers(): Promise<IStoreManagerOutput[]>
     getStoreManagerById(id: string): Promise<IStoreManagerOutput>
     getStoreManagersByStoreId(storeId: string): Promise<IStoreManagerOutput[]>
     getStoreManagersByCompanyId(companyId: string): Promise<IStoreManagerOutput[]>
-    createStoreManager(StoreManager: ICreateStoreManagerInput): Promise<IStoreManagerOutput>
-    updateStoreManager(id: string, StoreManager: IUpdateStoreManagerInput): Promise<IStoreManagerOutput>
+    createStoreManager(input: ICreateStoreManagerInput): Promise<IStoreManagerOutput>
+    updateStoreManager(id: string, input: IUpdateStoreManagerInput): Promise<IStoreManagerOutput>
     deleteStoreManager(id: string): Promise<void>
 }
 

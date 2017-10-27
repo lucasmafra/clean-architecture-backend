@@ -1,6 +1,6 @@
-import { IAuthenticatorService, IMyTopShopToken } from 'core'
+import { IAuthenticatorDataSource, IMyTopShopToken } from 'core'
 
-export class CognitoAuthenticatorService implements IAuthenticatorService  {
+export class CognitoAuthenticatorService implements IAuthenticatorDataSource  {
 
     public async signinAsCustomer(email: string, password: string): Promise<IMyTopShopToken> {
         return Promise.resolve({

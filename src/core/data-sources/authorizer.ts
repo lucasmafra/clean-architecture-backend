@@ -1,4 +1,6 @@
-export abstract class AuthorizerService {
+import { ErrorType, MyTopShopError } from 'core'
+
+export abstract class AuthorizerDataSource {
 
     public abstract getCredential(): Promise<IMyTopShopCredential>
     public async authorizeByAllowedRoles(allowedRoles: MyTopShopRole[]): Promise<IMyTopShopCredential> {
@@ -9,7 +11,7 @@ export abstract class AuthorizerService {
                     return Promise.resolve(credential)
                 }
             }
-            throw new Error('Unauthorized')
+            throw new MyTopShopError(ErrorType.Unauthorized)
         } catch (err) {
             throw err
         }
@@ -20,7 +22,7 @@ export abstract class AuthorizerService {
             const credential = await this.getCredential()
             for (const forbiddenRole of forbiddenRoles) {
                 if (credential.role === forbiddenRole) {
-                    throw new Error('Unauthorized')
+                    throw new MyTopShopError(ErrorType.Unauthorized)
                 }
             }
             return Promise.resolve(credential)
@@ -33,7 +35,7 @@ export abstract class AuthorizerService {
         try {
             const credential = await this.getCredential()
             if (id !== credential.userId) {
-                throw new Error('Unauthorized')
+                throw new MyTopShopError(ErrorType.Unauthorized)
             }
             return Promise.resolve(credential)
         } catch (err) {

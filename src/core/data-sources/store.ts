@@ -1,4 +1,4 @@
-export interface IStoreRepository {
+export interface IStoreDataSource {
     getStoresByIds(ids: string[]): Promise<IStoreOutput[]>
     getAllStores(): Promise<IStoreOutput[]>
     getStoreById(id: string): Promise<IStoreOutput>

@@ -1,0 +1,7 @@
+getCategories:
+    handler: src/presentation/api/customer/get-categories.endpoint
+    events:
+      - http:
+          path: customer/categories
+          method: get
+          cors: true

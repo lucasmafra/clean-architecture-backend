@@ -1,39 +1,14 @@
-import { ICustomerGetCategoriesOutput } from 'core'
+import { APIGatewayEvent, Callback, Context  } from 'aws-lambda'
 import { Injector } from 'di-typescript'
-import { Field, List, ObjectType } from 'graphql-decorator'
-import { CustomerGetCategories } from 'presentation/use-case-factories/customer'
+import { buildResponseError, buildResponseSuccess, ResponseCode } from 'presentation/api/response'
+import { CustomerGetCategories } from 'presentation/use-case-factories'
 
-@ObjectType()
-export class SubcategoryForCustomer {
-
-    @Field()
-    public id: string
-
-    @Field()
-    public name: string
-
-    @Field()
-    public image: string
-
-}
-
-@ObjectType()
-export class CategoryForCustomer implements ICustomerGetCategoriesOutput {
-
-    @Field()
-    public id: string
-
-    @Field()
-    public name: string
-
-    @Field()
-    public image: string
-
-    @List() @Field({ type: SubcategoryForCustomer })
-    public subcategories: SubcategoryForCustomer[]
-}
-
-export function customerGetCategories(): Promise<CategoryForCustomer[]> {
-    const useCase = new Injector().get(CustomerGetCategories).build()
-    return useCase.execute(null)
+export async function endpoint(event: APIGatewayEvent, context: Context, callback: Callback) {
+    try {
+        const useCase = new Injector().get(CustomerGetCategories).build()
+        const result = await useCase.execute(null)
+        callback(undefined, buildResponseSuccess(ResponseCode.Success, result))
+    } catch (err) {
+        callback(undefined, buildResponseError(err))
+    }
 }

@@ -6,6 +6,11 @@ provider:
 
 functions: ${file(src/presentation/api/admin/routes.yml)}
 
+package:
+ exclude: # Specify the directories and files which should be excluded in the deployment package
+   - .git/**
+   - .travis.yml
+   
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local

@@ -1,16 +1,11 @@
-import { ICategoryOutput, ICategoryRepository, ICreateCategoryInput, IUpdateCategoryInput } from 'core'
+import { ICategoryDataSource, ICategoryOutput, ICreateCategoryInput, IUpdateCategoryInput } from 'core'
 
-export class DynamoCategory implements ICategoryRepository {
+export class CategoryDatabase implements ICategoryDataSource {
 
     private mockCategory: ICategoryOutput = {
         id: '1',
         image: 'fkjdlkjfksl',
         name:  'Categoria teste',
-        subcategories: [{
-            id: '11',
-            name: 'Subcategory 11',
-            image: 'jdalksjdklajdak',
-        }],
     }
 
     public async getCategoriesByIds(ids: string[]): Promise<ICategoryOutput[]> {

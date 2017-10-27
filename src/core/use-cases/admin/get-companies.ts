@@ -1,18 +1,18 @@
-import { ICompanyRepository} from 'core/repositories'
-import { AuthorizerService } from 'core/services'
+import { ICompanyDataSource} from 'core'
+import { AuthorizerDataSource } from 'core'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminGetCompanies extends BaseAdminUseCase<null, IAdminGetCompaniesOutput[]> {
 
   constructor(
-    protected authorizerService: AuthorizerService,
-    protected companyRepository: ICompanyRepository,
+    protected authorizerDataSAuthorizerDataSource: AuthorizerDataSource,
+    protected companyDataSource: ICompanyDataSource,
   ) {
-    super(authorizerService)
+    super(authorizerDataSAuthorizerDataSource)
   }
 
   public async buildUseCase(): Promise<IAdminGetCompaniesOutput[]> {
-    return this.companyRepository.getAllCompanies()
+    return this.companyDataSource.getAllCompanies()
   }
 }
 

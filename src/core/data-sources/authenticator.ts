@@ -1,4 +1,4 @@
-export interface IAuthenticatorService {
+export interface IAuthenticatorDataSource {
     signinAsCustomer(email: string, password: string): Promise<IMyTopShopToken>
     signinAsAdmin(email: string, password: string): Promise<IMyTopShopToken>
     signinAsCompanyOwner(email: string, password: string): Promise<IMyTopShopToken>

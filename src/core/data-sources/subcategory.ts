@@ -1,4 +1,4 @@
-export interface ISubcategoryRepository {
+export interface ISubcategoryDataSource {
     getSubcategoriesByIds(ids: string[]): Promise<ISubcategoryOutput[]>
     getAllSubcategories(): Promise<ISubcategoryOutput[]>
     getSubcategoriesByCategoryId(categoryId: string): Promise<ISubcategoryOutput[]>

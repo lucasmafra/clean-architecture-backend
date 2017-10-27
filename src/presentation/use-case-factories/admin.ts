@@ -8,34 +8,34 @@ import { Inject } from 'di-typescript'
 export class AdminGetCompanies implements IUseCaseFactory<AdminUseCases.AdminGetCompanies> {
     constructor(
         protected authorizerService: CognitoAuthorizer,
-        protected companyRepository: Database.DynamoCompany,
+        protected companyDataSource: Database.CompanyDatabase,
     ) {}
-    public build() { return new AdminUseCases.AdminGetCompanies(this.authorizerService, this.companyRepository) }
+    public build() { return new AdminUseCases.AdminGetCompanies(this.authorizerService, this.companyDataSource) }
 }
 
 @Inject
 export class AdminGetCompanyOwnerDetail implements IUseCaseFactory<AdminUseCases.AdminGetCompanyOwnerDetail> {
     constructor(
         protected authorizerService: CognitoAuthorizer,
-        protected companyOwnerRepository: Database.DynamoCompanyOwner,
+        protected companyOwnerDataSource: Database.CompanyOwnerDatabase,
     ) {}
-    public build() { return new AdminUseCases.AdminGetCompanyOwnerDetail(this.authorizerService, this.companyOwnerRepository) }
+    public build() { return new AdminUseCases.AdminGetCompanyOwnerDetail(this.authorizerService, this.companyOwnerDataSource) }
 }
 
 @Inject
 export class AdminGetCompanyOwners implements IUseCaseFactory<AdminUseCases.AdminGetCompanyOwners> {
     constructor(
         protected authorizerService: CognitoAuthorizer,
-        protected companyOwnerRepository: Database.DynamoCompanyOwner,
+        protected companyOwnerDataSource: Database.CompanyOwnerDatabase,
     ) {}
-    public build() { return new AdminUseCases.AdminGetCompanyOwners(this.authorizerService, this.companyOwnerRepository) }
+    public build() { return new AdminUseCases.AdminGetCompanyOwners(this.authorizerService, this.companyOwnerDataSource) }
 }
 
 @Inject
 export class AdminCreateCategory implements IUseCaseFactory<AdminUseCases.AdminCreateCategory> {
     constructor(
         protected authorizerService: CognitoAuthorizer,
-        protected categoryRepository: Database.DynamoCategory,
+        protected categoryDataSource: Database.CategoryDatabase,
     ) {}
-    public build() { return new AdminUseCases.AdminCreateCategory(this.authorizerService, this.categoryRepository) }
+    public build() { return new AdminUseCases.AdminCreateCategory(this.authorizerService, this.categoryDataSource) }
 }

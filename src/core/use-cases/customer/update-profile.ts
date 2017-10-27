@@ -1,18 +1,18 @@
-import { CustomerAccountProvider, ICustomerRepository } from 'core/repositories'
-import { AuthorizerService } from 'core/services'
+import { CustomerAccountProvider, ICustomerDataSource } from 'core'
+import { AuthorizerDataSource } from 'core'
 import { BaseCustomerUseCase } from './base-customer-use-case'
 
 export class CustomerUpdateProfile extends BaseCustomerUseCase<ICustomerUpdateProfileInput, ICustomerUpdateProfileOutput> {
 
   constructor(
-    protected authorizerService: AuthorizerService,
-    protected customerRepository: ICustomerRepository,
+    protected authorizerDataSource: AuthorizerDataSource,
+    protected customerDataSource: ICustomerDataSource,
   ) {
-    super(authorizerService)
+    super(authorizerDataSource)
   }
 
   public async buildUseCase(input: ICustomerUpdateProfileInput): Promise<ICustomerUpdateProfileOutput> {
-    return this.customerRepository.updateCustomer(this.credential.userId, input)
+    return this.customerDataSource.updateCustomer(this.credential.userId, input)
   }
 }
 

@@ -1,4 +1,4 @@
-export interface ICustomerRepository {
+export interface ICustomerDataSource {
     getCustomersByIds(ids: string[]): Promise<ICustomerOutput[]>
     getAllCustomers(): Promise<ICustomerOutput[]>
     getCustomerById(id: string): Promise<ICustomerOutput>

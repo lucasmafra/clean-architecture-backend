@@ -1,7 +1,7 @@
 import { APIGatewayEvent, Callback, Context  } from 'aws-lambda'
 import { Injector } from 'di-typescript'
 import { AdminGetCompanyOwnerDetail } from 'presentation/use-case-factories'
-import { buildResponse } from '../my-top-shop-response'
+import { buildResponseError, buildResponseSuccess, ResponseCode } from '../response'
 
 export async function endpoint(event: APIGatewayEvent, context: Context, callback: Callback) {
     try {
@@ -11,8 +11,8 @@ export async function endpoint(event: APIGatewayEvent, context: Context, callbac
         const id = event.pathParameters.id
         const useCase = new Injector().get(AdminGetCompanyOwnerDetail).build()
         const result = await useCase.execute({id})
-        callback(undefined, buildResponse(200, result))
+        callback(undefined, buildResponseSuccess(ResponseCode.Success, result))
     } catch (err) {
-        callback(undefined, buildResponse(500, undefined, err.message))
+        callback(undefined, buildResponseError(err))
     }
 }

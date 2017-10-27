@@ -1,6 +1,6 @@
-import { ICompanyOwnerOutput, ICompanyOwnerRepository, ICreateCompanyOwnerInput, IUpdateCompanyOwnerInput } from 'core'
+import { ICompanyOwnerDataSource, ICompanyOwnerOutput, ICreateCompanyOwnerInput, IUpdateCompanyOwnerInput } from 'core'
 
-export class DynamoCompanyOwner implements ICompanyOwnerRepository {
+export class CompanyOwnerDatabase implements ICompanyOwnerDataSource {
 
     private mockCompanyOwner = {
         id: '1',

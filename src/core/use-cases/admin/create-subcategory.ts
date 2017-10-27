@@ -1,31 +1,31 @@
-import { ISubcategoryRepository } from 'core/repositories'
-import { AuthorizerService } from 'core/services'
+import { AuthorizerDataSource } from 'core'
+import { ISubcategoryDataSource } from 'core/data-sources'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminCreateSubcategory extends BaseAdminUseCase<IAdminCreateSubcategoryInput, IAdminCreateSubcategoryOutput> {
 
     constructor(
-        protected authorizerService: AuthorizerService,
-        protected subcategoryRepository: ISubcategoryRepository,
+        protected authorizerDataSource: AuthorizerDataSource,
+        protected subcategoryDataSource: ISubcategoryDataSource,
     ) {
-        super(authorizerService)
+        super(authorizerDataSource)
     }
 
     public async buildUseCase(input: IAdminCreateSubcategoryInput): Promise<IAdminCreateSubcategoryOutput> {
-        return this.subcategoryRepository.createSubcategory(input)
+        return this.subcategoryDataSource.createSubcategory(input)
     }
 
 }
 
-interface IAdminCreateSubcategoryInput {
-    name: string
-    image: string,
-    categoryId: string,
+class IAdminCreateSubcategoryInput {
+    public name: string
+    public image: string
+    public categoryId: string
 }
 
-interface IAdminCreateSubcategoryOutput {
-    id: string
-    name: string
-    image: string
-    categoryId: string
+class IAdminCreateSubcategoryOutput {
+    public id: string
+    public name: string
+    public image: string
+    public categoryId: string
 }

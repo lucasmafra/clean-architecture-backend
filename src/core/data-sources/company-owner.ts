@@ -1,4 +1,4 @@
-export interface ICompanyOwnerRepository {
+export interface ICompanyOwnerDataSource {
     getCompanyOwnersByIds(ids: string[]): Promise<ICompanyOwnerOutput[]>
     getAllCompanyOwners(): Promise<ICompanyOwnerOutput[]>
     getCompanyOwnerById(id: string): Promise<ICompanyOwnerOutput>
