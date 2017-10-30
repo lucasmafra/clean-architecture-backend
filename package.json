@@ -6,26 +6,20 @@
     "aws-lambda": "^0.1.2",
     "class-validator": "^0.7.3",
     "di-typescript": "^1.1.4",
-    "dynogels": "^8.0.1",
-    "graphql": "0.10.3",
-    "graphql-decorator": "^0.2.0",
-    "graphql-ts": "https://github.com/lucasmafra/graphql-ts/tarball/dev",
     "lodash": "^4.17.4",
-    "uuid": "^3.1.0",
-    "vogels": "^2.2.0"
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.17",
-    "@types/graphql": "^0.11.5",
     "@types/lodash": "^4.14.77",
     "@types/uuid": "^3.4.2",
     "reflect-metadata": "^0.1.10",
     "serverless-dynamodb-local": "^0.2.25",
     "serverless-offline": "^3.16.0",
-    "serverless-plugin-typescript": "^1.1.3",
     "serverless-webpack": "^3.1.2",
     "ts-loader": "^2.3.7",
     "tslint": "^5.7.0",
+    "typescript": "^2.5.3",
     "webpack": "^3.7.1"
   },
   "scripts": {

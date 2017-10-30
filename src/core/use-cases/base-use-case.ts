@@ -1,4 +1,4 @@
-import { ErrorType, MyTopShopError } from 'core'
+import { ApplicationError, ApplicationErrorType } from 'core/application-error'
 
 export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
@@ -10,10 +10,10 @@ export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
             return result
         } catch (err) {
             console.log(err.stack)
-            if (err instanceof MyTopShopError) {
+            if (err instanceof ApplicationError) {
                 throw err
             }
-            throw new MyTopShopError(ErrorType.GenericError)
+            throw new ApplicationError(ApplicationErrorType.GenericError)
         }
     }
 }

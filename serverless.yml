@@ -1,7 +1,6 @@
 service: clean-architecture-case-study
 
 provider:
-  stage: local
   environment: ${file(./env.yml):${opt:stage, self:provider.stage}}
   name: aws
   runtime: nodejs6.10

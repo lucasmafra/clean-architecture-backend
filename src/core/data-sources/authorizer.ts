@@ -1,4 +1,4 @@
-import { ErrorType, MyTopShopError } from 'core'
+import { ApplicationError, ApplicationErrorType } from 'core/application-error'
 
 export abstract class AuthorizerDataSource {
 
@@ -11,7 +11,7 @@ export abstract class AuthorizerDataSource {
                     return Promise.resolve(credential)
                 }
             }
-            throw new MyTopShopError(ErrorType.Unauthorized)
+            throw new ApplicationError(ApplicationErrorType.Unauthorized)
         } catch (err) {
             throw err
         }
@@ -22,7 +22,7 @@ export abstract class AuthorizerDataSource {
             const credential = await this.getCredential()
             for (const forbiddenRole of forbiddenRoles) {
                 if (credential.role === forbiddenRole) {
-                    throw new MyTopShopError(ErrorType.Unauthorized)
+                    throw new ApplicationError(ApplicationErrorType.Unauthorized)
                 }
             }
             return Promise.resolve(credential)
@@ -35,7 +35,7 @@ export abstract class AuthorizerDataSource {
         try {
             const credential = await this.getCredential()
             if (id !== credential.userId) {
-                throw new MyTopShopError(ErrorType.Unauthorized)
+                throw new ApplicationError(ApplicationErrorType.Unauthorized)
             }
             return Promise.resolve(credential)
         } catch (err) {
