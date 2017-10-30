@@ -1,3 +1,5 @@
+import { ApplicationError, ApplicationErrorType } from 'core/application-error'
+
 export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
     public abstract buildUseCase(input: IUseCaseInput): Promise<IUseCaseOutput>
@@ -8,7 +10,10 @@ export abstract class BaseUseCase<IUseCaseInput, IUseCaseOutput> {
             return result
         } catch (err) {
             console.log(err.stack)
-            throw(err)
+            if (err instanceof ApplicationError) {
+                throw err
+            }
+            throw new ApplicationError(ApplicationErrorType.GenericError)
         }
     }
 }

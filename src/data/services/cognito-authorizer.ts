@@ -1,6 +1,6 @@
-import { AuthorizerService, IMyTopShopCredential, MyTopShopRole } from 'core'
+import { AuthorizerDataSource, IMyTopShopCredential, MyTopShopRole } from 'core'
 
-export class CognitoAuthorizer extends AuthorizerService  {
+export class CognitoAuthorizer extends AuthorizerDataSource  {
 
   public async getCredential(): Promise<IMyTopShopCredential> {
       return Promise.resolve({

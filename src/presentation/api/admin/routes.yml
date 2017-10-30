@@ -1,0 +1,7 @@
+createCategory:
+    handler: src/presentation/api/admin/create-category.handler
+    events:
+    - http:
+        path: admin/category
+        method: post
+        cors: true

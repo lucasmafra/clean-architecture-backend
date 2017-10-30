@@ -1,12 +1,31 @@
 service: clean-architecture-case-study
 
 provider:
+  environment: ${file(./env.yml):${opt:stage, self:provider.stage}}
   name: aws
   runtime: nodejs6.10
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - dynamodb:*
+      Resource: "*"
 
-functions: ${file(src/presentation/routes.yml)}
+functions: ${file(allRoutes.yml)}
 
+package:
+ exclude: # Specify the directories and files which should be excluded in the deployment package
+   - .git/**
+   - .travis.yml
+   - assets
+   
 plugins:
   - serverless-webpack
   - serverless-dynamodb-local
   - serverless-offline
+
+
+custom:
+  dynamodb:
+    start:
+      migrate: true
+      seed: true

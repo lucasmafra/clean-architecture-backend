@@ -8,16 +8,8 @@ import { Inject } from 'di-typescript'
 export class CustomerGetCategories implements IUseCaseFactory<CustomerUseCases.CustomerGetCategories> {
     constructor(
         public authorizerService: CognitoAuthorizer,
-        public categoryRepository: Database.DynamoCategory,
+        public categoryDataSource: Database.CategoryDatabase,
+        public subcategoryDataSource: Database.SubcategoryDatabase,
     ) {}
-    public build() { return new CustomerUseCases.CustomerGetCategories(this.authorizerService, this.categoryRepository) }
-}
-
-@Inject
-export class CustomerUpdateProfile implements IUseCaseFactory<CustomerUseCases.CustomerUpdateProfile> {
-    constructor(
-        public authorizerService: CognitoAuthorizer,
-        public customerRepository: Database.DynamoCustomer,
-    ) {}
-    public build() { return new CustomerUseCases.CustomerUpdateProfile(this.authorizerService, this.customerRepository) }
+    public build() { return new CustomerUseCases.CustomerGetCategories(this.authorizerService, this.categoryDataSource, this.subcategoryDataSource) }
 }

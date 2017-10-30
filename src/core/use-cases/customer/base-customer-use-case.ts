@@ -1,11 +1,12 @@
-import { AuthorizerService, IMyTopShopCredential, MyTopShopRole } from 'core/services'
+import { ApplicationError, ApplicationErrorType } from 'core/application-error'
+import { AuthorizerDataSource, IMyTopShopCredential, MyTopShopRole } from 'core/data-sources'
 import { BaseUseCase } from '../base-use-case'
 
 export abstract class BaseCustomerUseCase<IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 
     public credential: IMyTopShopCredential
 
-    constructor(private authorizer: AuthorizerService) {
+    constructor(private authorizer: AuthorizerDataSource) {
         super()
     }
 
@@ -16,7 +17,10 @@ export abstract class BaseCustomerUseCase<IUseCaseInput, IUseCaseOutput> extends
             return result
         } catch (err) {
             console.log(err.stack)
-            throw(err)
+            if (err instanceof ApplicationError) {
+                throw err
+            }
+            throw new ApplicationError(ApplicationErrorType.GenericError)
         }
     }
 }
