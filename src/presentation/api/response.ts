@@ -1,4 +1,4 @@
-import { ErrorType, MyTopShopError } from 'core'
+import { ApplicationError, ApplicationErrorType } from 'core'
 
 export class Response {
       public statusCode: ResponseCode
@@ -34,15 +34,15 @@ export function buildResponseSuccess(
 }
 
 export function buildResponseError(
-    error: MyTopShopError,
+    error: ApplicationError,
 ): Response {
     let statusCode: number
     switch (error.type) {
-        case ErrorType.Unauthorized:
+        case ApplicationErrorType.Unauthorized:
             statusCode = ResponseCode.Unauthorized
             error.data = { message: 'Unauthorized'}
             break
-        case ErrorType.ValidationError:
+        case ApplicationErrorType.ValidationError:
             statusCode = ResponseCode.InvalidRequest
             break
         default:

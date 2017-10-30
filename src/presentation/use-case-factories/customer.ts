@@ -13,12 +13,3 @@ export class CustomerGetCategories implements IUseCaseFactory<CustomerUseCases.C
     ) {}
     public build() { return new CustomerUseCases.CustomerGetCategories(this.authorizerService, this.categoryDataSource, this.subcategoryDataSource) }
 }
-
-@Inject
-export class CustomerUpdateProfile implements IUseCaseFactory<CustomerUseCases.CustomerUpdateProfile> {
-    constructor(
-        public authorizerService: CognitoAuthorizer,
-        public customerDataSource: Database.CustomerDatabase,
-    ) {}
-    public build() { return new CustomerUseCases.CustomerUpdateProfile(this.authorizerService, this.customerDataSource) }
-}

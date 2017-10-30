@@ -1,5 +1,2 @@
 export * from './category'
-export * from './company'
-export * from './company-owner'
-export * from './customer'
 export * from './subcategory'

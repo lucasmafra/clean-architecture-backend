@@ -1,5 +1,5 @@
 import { APIGatewayEvent, Callback, Context  } from 'aws-lambda'
-import { AdminCreateCategoryInput, ErrorType, MyTopShopError } from 'core'
+import { AdminCreateCategoryInput, ApplicationError, ApplicationErrorType } from 'core'
 import { Injector } from 'di-typescript'
 import { AdminCreateCategory } from 'presentation/use-case-factories'
 import { parseRequest } from '../request'
@@ -11,7 +11,7 @@ export async function endpoint(event: APIGatewayEvent, context: Context, callbac
         const input = new AdminCreateCategoryInput()
         const validationErrors = await request.validateBody(input)
         if (validationErrors.length) {
-            throw new MyTopShopError(ErrorType.ValidationError, validationErrors)
+            throw new ApplicationError(ApplicationErrorType.ValidationError, validationErrors)
         }
         const useCase = new Injector().get(AdminCreateCategory).build()
         const result = await useCase.execute(input)
