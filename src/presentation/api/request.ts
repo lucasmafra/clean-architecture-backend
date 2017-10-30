@@ -37,9 +37,3 @@ export function parseRequest(event: APIGatewayEvent): Request {
         event.headers.Token || event.headers.token,
     )
 }
-
-export function Serializable(): any {
-    return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
-        target[propertyKey] = undefined
-    }
-}

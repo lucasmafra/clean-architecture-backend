@@ -1,4 +1,5 @@
-import { AuthorizerDataSource, BaseUseCase, IMyTopShopCredential, MyTopShopRole } from 'core'
+import { AuthorizerDataSource, IMyTopShopCredential, MyTopShopRole } from 'core/data-sources'
+import { BaseUseCase } from '../base-use-case'
 
 export abstract class BaseAdminUseCase<IUseCaseInput, IUseCaseOutput> extends BaseUseCase<IUseCaseInput, IUseCaseOutput> {
 

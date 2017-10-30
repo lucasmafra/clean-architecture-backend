@@ -1,41 +1,50 @@
+import { ICreateSubcategoryInput, ISubcategoryDataSource, IUpdateSubcategoryInput } from 'core'
+import { v4 } from 'uuid'
+import { OSDynamo } from './base-dynamo'
+import { TABLE_NAMES } from './constants'
 
-import { ICreateSubcategoryInput, ISubcategoryDataSource, ISubcategoryOutput, IUpdateSubcategoryInput } from 'core'
+interface IDynamoSubcategory {
+    id: string
+    name: string
+    image: string
+    categoryId: string
+}
+
+const Subcategory = OSDynamo.define<IDynamoSubcategory>(TABLE_NAMES.Subcategory)
 
 export class SubcategoryDatabase implements ISubcategoryDataSource {
 
-    private mockSubcategory: ISubcategoryOutput = {
-        id: '1',
-        image: 'fkjdlkjfksl',
-        name:  'Categoria teste',
-        categoryId: '1',
+    public async getSubcategoriesByIds(ids: string[]) {
+        return Subcategory.batchGet(ids)
     }
 
-    public async getSubcategoriesByIds(ids: string[]): Promise<ISubcategoryOutput[]> {
-        return new Array<ISubcategoryOutput>(this.mockSubcategory)
+    public async getAllSubcategories() {
+        return Subcategory.scan()
     }
 
-    public async getAllSubcategories(): Promise<ISubcategoryOutput[]> {
-        return new Array<ISubcategoryOutput>(this.mockSubcategory)
+    public async getSubcategoryById(id: string) {
+        return Subcategory.get(id)
     }
 
-    public async getSubcategoryById(id: string): Promise<ISubcategoryOutput> {
-        return this.mockSubcategory
+    public async getSubcategoriesByCategoryId(categoryId: string) {
+        const results = await Subcategory.query('categoryId = :value', { ':value': categoryId }, 'categoryId-id-index')
+        if (results.length) {
+            return Subcategory.batchGet(results.map( (result) => result.id))
+        }
+        return new Array<IDynamoSubcategory>()
     }
 
-    public async getSubcategoriesByCategoryId(id: string): Promise<ISubcategoryOutput[]> {
-        return new Array<ISubcategoryOutput>(this.mockSubcategory)
+    public async createSubcategory(subcategory: ICreateSubcategoryInput) {
+        const id = v4()
+        return Subcategory.put({ id, ...subcategory })
     }
 
-    public async createSubcategory(Subcategory: ICreateSubcategoryInput): Promise<ISubcategoryOutput> {
-        return this.mockSubcategory
+    public async updateSubcategory(id: string, subcategory: IUpdateSubcategoryInput) {
+        return Subcategory.update(subcategory, id)
     }
 
-    public async updateSubcategory(id: string, Subcategory: IUpdateSubcategoryInput): Promise<ISubcategoryOutput> {
-        return this.mockSubcategory
-    }
-
-    public async deleteSubcategory(id: string): Promise<void> {
-        return
+    public async deleteSubcategory(id: string) {
+        return Subcategory.delete(id)
     }
 
 }

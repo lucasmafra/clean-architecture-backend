@@ -40,12 +40,14 @@ export function buildResponseError(
     switch (error.type) {
         case ErrorType.Unauthorized:
             statusCode = ResponseCode.Unauthorized
+            error.data = { message: 'Unauthorized'}
             break
         case ErrorType.ValidationError:
             statusCode = ResponseCode.InvalidRequest
             break
         default:
             statusCode = ResponseCode.InternalServerError
+            error.data = { message: 'Internal server error'}
             break
     }
     const response = new Response(statusCode, undefined, error.data)

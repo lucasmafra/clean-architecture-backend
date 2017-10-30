@@ -1,6 +1,6 @@
 import { IsString, Length } from 'class-validator'
 import { AuthorizerDataSource, ICategoryDataSource } from 'core'
-import { Serializable } from 'presentation/api/request'
+import { Serializable } from 'core'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminCreateCategory extends BaseAdminUseCase<AdminCreateCategoryInput, AdminCreateCategoryOutput> {

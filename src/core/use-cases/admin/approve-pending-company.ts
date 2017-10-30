@@ -1,5 +1,4 @@
 import { AuthorizerDataSource, IAuthenticatorDataSource, ICompanyDataSource, IMailerDataSource } from 'core'
-import {  } from 'core'
 import { BaseAdminUseCase } from './base-admin-use-case'
 
 export class AdminApprovePendingCompany extends BaseAdminUseCase<IAdminApprovePendingCompanyInput, void> {

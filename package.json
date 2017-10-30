@@ -6,11 +6,13 @@
     "aws-lambda": "^0.1.2",
     "class-validator": "^0.7.3",
     "di-typescript": "^1.1.4",
+    "dynogels": "^8.0.1",
     "graphql": "0.10.3",
     "graphql-decorator": "^0.2.0",
     "graphql-ts": "https://github.com/lucasmafra/graphql-ts/tarball/dev",
     "lodash": "^4.17.4",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "vogels": "^2.2.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.17",
@@ -27,7 +29,12 @@
     "webpack": "^3.7.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "mergeRoutes": "merge-yaml -i src/presentation/api/**/*.yml -o allRoutes.yml",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "npm run mergeRoutes && sls offline start --s dev",
+    "stage": "npm run mergeRoutes && sls offline --s stage",
+    "deploy:stage": "npm run mergeRoutes && sls deploy --s stage",
+    "deploy:prod": "npm run mergeRoutes && sls deploy --s prod"
   },
   "author": "",
   "license": "ISC"
