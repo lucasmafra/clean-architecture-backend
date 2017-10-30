@@ -16,6 +16,7 @@ package:
  exclude: # Specify the directories and files which should be excluded in the deployment package
    - .git/**
    - .travis.yml
+   - assets
    
 plugins:
   - serverless-webpack

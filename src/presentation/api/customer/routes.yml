@@ -1,5 +1,5 @@
 getCategories:
-    handler: src/presentation/api/customer/get-categories.endpoint
+    handler: src/presentation/api/customer/get-categories.handler
     events:
     - http:
         path: customer/categories

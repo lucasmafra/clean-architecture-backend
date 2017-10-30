@@ -3,7 +3,7 @@ import { Injector } from 'di-typescript'
 import { buildResponseError, buildResponseSuccess, ResponseCode } from 'presentation/api/response'
 import { CustomerGetCategories } from 'presentation/use-case-factories'
 
-export async function endpoint(event: APIGatewayEvent, context: Context, callback: Callback) {
+export async function handler(event: APIGatewayEvent, context: Context, callback: Callback) {
     try {
         const useCase = new Injector().get(CustomerGetCategories).build()
         const result = await useCase.execute(null)

@@ -1,5 +1,5 @@
 createCategory:
-    handler: src/presentation/api/admin/create-category.endpoint
+    handler: src/presentation/api/admin/create-category.handler
     events:
     - http:
         path: admin/category

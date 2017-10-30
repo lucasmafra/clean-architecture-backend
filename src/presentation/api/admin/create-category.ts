@@ -5,7 +5,7 @@ import { AdminCreateCategory } from 'presentation/use-case-factories'
 import { parseRequest } from '../request'
 import { buildResponseError, buildResponseSuccess, ResponseCode } from '../response'
 
-export async function endpoint(event: APIGatewayEvent, context: Context, callback: Callback) {
+export async function handler(event: APIGatewayEvent, context: Context, callback: Callback) {
     try {
         const request = parseRequest(event)
         const input = new AdminCreateCategoryInput()
