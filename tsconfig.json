@@ -5,7 +5,7 @@
       "lib": [ "es6", "es2015", "dom", "esnext.asynciterable"],
       "moduleResolution": "node",
       "sourceMap": true,
-      "allowJs": true,
+      "allowJs": false,
       "noImplicitAny": true,
       "noUnusedLocals": true,
       "noImplicitThis": true,
